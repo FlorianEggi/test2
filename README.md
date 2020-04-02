@@ -40,7 +40,7 @@ Der Webshop kann auf Basis unserer Holter Open Data Schnittstelle entwickelt wer
 * Artikel zu Warenkorb hinzufügen
 * Warenkorb bestellen
 
-Die Details zu den jeweiligen Webservices und eine vollständige Auflistung findet man in der Spezifikation zur Holter Open Data Schnittstelle.
+Die Details zu den jeweiligen Webservices und eine vollständige Auflistung findet man in der Spezifikation zur [Holter Open Data Schnittstelle](./doc/Holter%20Open%20Data%20V3.1.pdf).
 
 ## Ziele der Diplomarbeit
 
