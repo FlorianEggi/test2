@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Blazor.Hosting;
+using System.Threading.Tasks;
 
-namespace BlazorTutorial
+namespace Webshop
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+           // var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+             CreateHostBuilder(args).Build().Run();
+            //await builder.Build().RunAsync();
+
         }
 
         public static IWebAssemblyHostBuilder CreateHostBuilder(string[] args) =>
