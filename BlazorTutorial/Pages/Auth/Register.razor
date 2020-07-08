@@ -2,6 +2,8 @@
 @layout AuthLayout
 @using Webshop.Shared.Models.Requests
 
+@inject AuthenticationService authService
+@inject NavigationManager navigationManager
 <div class="row">
     <div class="col-12">
         <h2>Neuen Benutzer erstellen</h2>
@@ -11,28 +13,29 @@
 
                 </DataAnnotationsValidator>
                 <ValidationSummary />
-                <label>Vorname</label>
+                @*<label>Vorname</label>
                 <RadzenTextBox @bind-Value="model.FirstName"></RadzenTextBox>
 
                 <label>Nachname</label>
-                <RadzenTextBox @bind-Value="model.LastName"></RadzenTextBox>
+                <RadzenTextBox @bind-Value="model.LastName"></RadzenTextBox>*@
 
                 <label>Email</label>
-                <RadzenTextBox @bind-Value="model.Email"></RadzenTextBox>
+                <RadzenTextBox @bind-Value="model.Mail"></RadzenTextBox>
 
                 <label>Passwort</label>
                 <RadzenPassword @bind-Value="model.Password"></RadzenPassword>
 
-                <label>Password bestätigen</label>
-                <RadzenTextBox @bind-Value="model.ConfirmPassword"></RadzenTextBox>
+                @*<label>Password bestätigen</label>
+                <RadzenTextBox @bind-Value="model.ConfirmPassword"></RadzenTextBox>*@
 
                 <hr />
-                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Registrieren" ButtonStyle="Radzen.ButtonStyle.Primary" class="btn-block mr-2">
+                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Registrieren" ButtonStyle="Radzen.ButtonStyle.Primary" class="btn-block mr-2"
+                              Disabled="isBusy">
 
 
                 </RadzenButton>
 
-                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Anmelden" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2">
+                <RadzenButton ButtonType="Radzen.ButtonType.Button" Text="Anmelden" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2">
 
 
                 </RadzenButton>
@@ -43,8 +46,25 @@
 @code {
     RegisterRequest model = new RegisterRequest();
 
-    public void RegisterUser()
-    {
+    bool isBusy = false;
 
+    public async Task RegisterUser()
+    {
+        isBusy = true;
+        string message = string.Empty;
+
+        var result = await authService.RegisterUserAsync(model);
+        Console.WriteLine(result.Status);
+        //if(result.Status)
+        //{
+
+        //}
+        //else
+        //{
+
+        //}
+        message = result.Data.First();
+
+        isBusy = false;
     }
 }

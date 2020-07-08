@@ -10,22 +10,22 @@ namespace Webshop.Shared.Models.Requests
         [Required]
         [StringLength(50)]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Mail { get; set; }
 
-        [Required]
-        [StringLength(25)]
-        public string FirstName { get; set; }
+        //[Required]
+        //[StringLength(25)]
+        //public string FirstName { get; set; }
 
-        [Required]
-        [StringLength(25)]
-        public string LastName { get; set; }
+        //[Required]
+        //[StringLength(25)]
+        //public string LastName { get; set; }
 
         [Required]
         [StringLength(50)]
         public string Password { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string ConfirmPassword { get; set; }
+        //[Required]
+        //[StringLength(50)]
+        //public string ConfirmPassword { get; set; }
     }
 }
