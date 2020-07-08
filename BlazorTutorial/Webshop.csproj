@@ -5,6 +5,11 @@
     <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <!--<PackageReference Include="AKSoftware.WebApi" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview4.19579.2" />
@@ -13,6 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.1.0-preview4.19579.2" PrivateAssets="all" />
     -->
    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+   <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
    <PackageReference Include="Radzen.Blazor" Version="2.10.14" />
     <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.2.0-preview1.20073.1" />

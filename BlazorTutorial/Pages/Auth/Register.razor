@@ -1,9 +1,15 @@
 ﻿@page "/auth/register"
 @layout AuthLayout
 @using Webshop.Shared.Models.Requests
+@using Newtonsoft.Json 
 
 @inject AuthenticationService authService
 @inject NavigationManager navigationManager
+@inject HttpClient Http
+    @*<pre><code>app.UseCors(policy => 
+    policy.WithOrigins("http://localhost:5000", "https://localhost:5001")
+    .AllowAnyMethod()
+    .WithHeaders(HeaderNames.ContentType));</code></pre>*@
 <div class="row">
     <div class="col-12">
         <h2>Neuen Benutzer erstellen</h2>
@@ -50,21 +56,69 @@
 
     public async Task RegisterUser()
     {
+
+        string serializedUser = JsonConvert.SerializeObject(model);
+
+        HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
+
+        httpRequestMessage.Method = new HttpMethod("POST");
+        httpRequestMessage.RequestUri = new Uri("https://www.online.holter.at/PGM4/OD000R.PGM");
+        httpRequestMessage.Content = new StringContent(serializedUser);
+        //, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
+       // httpRequestMessage.Content = new StringContent(serializedUser);
+
+        httpRequestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+
+        Console.WriteLine(httpRequestMessage);
+        var response = await Http.SendAsync(httpRequestMessage);
+
+        Console.WriteLine(response.Headers);
+        Console.WriteLine(response.Content);
+
+        var responseStatus = response.StatusCode;
+        var responseBody = await response.Content.ReadAsStringAsync();
+
+        if(responseStatus.ToString() == "OK")
+        {
+            var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
+            Console.WriteLine(returnedUser);
+
+
+        }
+        else
+        {
+
+        }
+
+        Console.WriteLine(responseStatus);
+        Console.WriteLine(responseBody);
+
+        //  var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
+
+        // Console.WriteLine(returnedUser);
+
+
         isBusy = true;
         string message = string.Empty;
 
-        var result = await authService.RegisterUserAsync(model);
-        Console.WriteLine(result.Status);
-        //if(result.Status)
-        //{
+        //var result = await authService.RegisterUserAsync(model);
+        //Console.WriteLine(result.Status);
+        ////Console.WriteLine(result.Error.First());
+        ////Console.WriteLine(result.Error);
 
-        //}
-        //else
-        //{
 
-        //}
-        message = result.Data.First();
 
-        isBusy = false;
+
+        ////if(result.Status)
+        ////{
+
+        ////}
+        ////else
+        ////{
+
+        ////}
+        //message = result.Data.First();
+
+        //isBusy = false;
     }
 }

@@ -18,12 +18,12 @@ namespace Webshop
                 return new AuthenticationService(url);
             });
 
-            WebAssemblyHttpMessageHandlerOptions.DefaultCredentials = FetchCredentialsOption.Include;
+            //WebAssemblyHttpMessageHandlerOptions.DefaultCredentials = FetchCredentialsOption.Include;
 
             builder.RootComponents.Add<App>("app");
             // CreateHostBuilder(args).Build().Run();
             await builder.Build().RunAsync();
-
+            
         }
 
         //    public static IWebAssemblyHostBuilder CreateHostBuilder(string[] args) =>

@@ -8,5 +8,7 @@ namespace Webshop.Shared.Models.Responses
     {
         public string Status { get; set; }
         public string[] Data { get; set; }
+       // public string[] Error { get; set; }
+
     }
 }
