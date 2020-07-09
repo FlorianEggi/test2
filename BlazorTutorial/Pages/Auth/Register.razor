@@ -3,6 +3,7 @@
 @layout AuthLayout
 @using Webshop.Shared.Models.Requests
 @using Newtonsoft.Json
+@using MatBlazor
 
 @*@inject AuthenticationStateProvider AuthenticationStateProvider*@
 
@@ -13,45 +14,71 @@
     policy.WithOrigins("http://localhost:5000", "https://localhost:5001")
     .AllowAnyMethod()
     .WithHeaders(HeaderNames.ContentType));</code></pre>*@
-<div class="row">
-    <div class="col-12">
+
+@*<div class="row">
+    <div class="col-12">*@
         @*<h2>Neuen Benutzer erstellen</h2>*@
-        <EditForm Model="model" OnValidSubmit="RegisterUser">
-            <RadzenCard>
+
+        <MatCard>
+            <div class="hidden-mdc-down">
+                <MatIconButton Icon="exit_to_app" Class="float-left" />
+                <MatIconButton Icon="home" Class="float-left" Link="/" />
+            </div>
+
+            <div class="logo">
+                <a href="/" title="Holter Online"><img src="/images/logo.png" asp-append-version="true" style="width:250px;"  /><br /></a>
+
+                <br />
+
+            </div>
+
+            <EditForm Model="model" OnValidSubmit="RegisterUser">
+                @*<RadzenCard>*@
                 <DataAnnotationsValidator>
 
                 </DataAnnotationsValidator>
                 <ValidationSummary />
-                @*<label>Vorname</label>
-                    <RadzenTextBox @bind-Value="model.FirstName"></RadzenTextBox>
 
-                    <label>Nachname</label>
-                    <RadzenTextBox @bind-Value="model.LastName"></RadzenTextBox>*@
 
-                <label>Email</label>
-                <RadzenTextBox @bind-Value="model.mail"></RadzenTextBox>
+                <fieldset>
+                    <div class="form-group">
+                        <MatTextField @bind-Value="model.mail" id="mail" Label="Email" Icon="person" IconTrailing="true" FullWidth="true" Required="true" tabindex="1"></MatTextField>
+                    </div>
+
+                    <div class="form-group">
+                        <MatTextField @bind-Value="model.password" id="password" Label="Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" tabindex="1"></MatTextField>
+                    </div>
+
+                    <div class="form-group">
+                        <MatButton class="float-right"  Disabled="isBusy" Type="submit" Raised="true" tabindex="3">Login</MatButton>
+                        @*<MatCheckbox @bind-Value="model.RememberMe" class="filled-in chk-col-blue">Remember Me</MatCheckbox>*@
+                    </div>
+                    <hr />
+                </fieldset>
+
+
+                @*<label>Email</label>
 
                 <label>Passwort</label>
-                <RadzenPassword @bind-Value="model.password"></RadzenPassword>
+                <RadzenPassword @bind-Value="model.password"></RadzenPassword>*@
 
                 @*<label>Password bestätigen</label>
-                    <RadzenTextBox @bind-Value="model.ConfirmPassword"></RadzenTextBox>*@
+                <RadzenTextBox @bind-Value="model.ConfirmPassword"></RadzenTextBox>*@
 
-                <hr />
+                @*<hr />
                 <RadzenButton Style="margin-bottom: 20px; width: 150px" ButtonType="Radzen.ButtonType.Submit" Text="Anmelden" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2"
                               Disabled="isBusy">
 
 
-                </RadzenButton>
-
-                @*<RadzenButton ButtonType="Radzen.ButtonType.Button" Style="margin-bottom: 20px; width: 150px" Text="Anmelden" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2">
+                </RadzenButton>*@
 
 
-                    </RadzenButton>*@
-            </RadzenCard>
-        </EditForm>
-    </div>
-</div>
+                @*</RadzenCard>*@
+            </EditForm>
+        </MatCard>
+       
+    @*</div>
+</div>*@
 @code {
     RegisterRequest model = new RegisterRequest();
 
@@ -67,7 +94,7 @@
 
         httpRequestMessage.Method = new HttpMethod("POST");
         httpRequestMessage.RequestUri = new Uri("https://www.online.holter.at/PGM4/OD000R.PGM");
-        httpRequestMessage.Content = new StringContent(serializedUser, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
+        httpRequestMessage.Content = new StringContent(serializedUser);//, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
         // httpRequestMessage.Content = new StringContent(serializedUser);
 
         httpRequestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -83,6 +110,7 @@
 
         var responseStatus = response.StatusCode;
         var responseBody = await response.Content.ReadAsStringAsync();
+        navigationManager.NavigateTo("counter");
 
 
         if (responseStatus.ToString() == "OK")
@@ -90,7 +118,7 @@
 
             var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
             Console.WriteLine(returnedUser);
-            navigationManager.NavigateTo("hello");
+           // navigationManager.NavigateTo("hello");
 
 
         }
