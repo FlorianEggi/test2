@@ -79,6 +79,8 @@
        
     @*</div>
 </div>*@
+
+
 @code {
     RegisterRequest model = new RegisterRequest();
 
@@ -86,6 +88,7 @@
 
     public async Task<bool> RegisterUser()
     {
+        isBusy = true;
 
         string serializedUser = JsonConvert.SerializeObject(model);
         Console.WriteLine(serializedUser);
@@ -100,7 +103,17 @@
         httpRequestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
         Console.WriteLine(httpRequestMessage);
-        var response = await Http.SendAsync(httpRequestMessage);
+
+        var formDictionary = new Dictionary<string, string>();
+        formDictionary.Add("mail", model.mail);
+        formDictionary.Add("password", model.password);
+
+        var formContent = new FormUrlEncodedContent(formDictionary);
+
+        var response = await Http.PostAsync("https://www.online.holter.at/PGM4/OD000R.PGM", formContent);
+
+
+        // var response = await Http.SendAsync(httpRequestMessage);
         // var response = await authService.RegisterUserAsync(model);
 
         Console.WriteLine(response);
@@ -108,24 +121,25 @@
         Console.WriteLine(response.Headers);
         Console.WriteLine(response.Content);
 
-        var responseStatus = response.StatusCode;
-        var responseBody = await response.Content.ReadAsStringAsync();
+        //var responseStatus = response.StatusCode;
+        //var responseBody = await response.Content.ReadAsStringAsync();
         navigationManager.NavigateTo("counter");
+        isBusy = false;
 
 
-        if (responseStatus.ToString() == "OK")
-        {
+        //if (responseStatus.ToString() == "OK")
+        //{
 
-            var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
-            Console.WriteLine(returnedUser);
-           // navigationManager.NavigateTo("hello");
+        //    //var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
+        //    //Console.WriteLine(returnedUser);
+        //    // navigationManager.NavigateTo("hello");
 
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-        }
+        //}
 
 
         //Console.WriteLine(responseStatus);
@@ -136,7 +150,6 @@
         //    Console.WriteLine(returnedUser);
 
 
-        isBusy = true;
         string message = string.Empty;
         return await Task.FromResult(true);
 
@@ -161,4 +174,5 @@
 
         //isBusy = false;
     }
+
 }
