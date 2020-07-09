@@ -1,8 +1,33 @@
 ﻿@page "/"
-@page "/hello"
+@page "/Home"
 
-<h1>Hello, world!</h1>
+    <div>
+        
+        <p>
+            <MatTextField @bind-Value="@myStringValue" Label="Suche"></MatTextField>
+        </p>
+        <p>
+        <MatButton>@myStringValue</MatButton>
+        </p>
 
-Welcome to your new app.
+    </div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code
+{
+    private string myStringValue;
+
+    public string MyStringValue
+    {
+        get { return myStringValue; }
+        set { myStringValue = value; }
+    }
+
+    public void valueChanged123()
+    {
+
+    }
+
+
+}
+
+
