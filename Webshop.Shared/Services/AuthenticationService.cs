@@ -22,8 +22,8 @@ namespace Webshop.Shared.Services
 
         public async Task<RegisterResponse> RegisterUserAsync(RegisterRequest request)
         {
-            
-            
+
+
             var result = await client.PostAsync<RegisterResponse>($"{_baseUrl}/PGM4/OD000R.PGM", request);
            // return null;
             return result.Result;

@@ -1,18 +1,21 @@
-﻿@page "/auth/register"
+﻿@page "/"
+
 @layout AuthLayout
 @using Webshop.Shared.Models.Requests
-@using Newtonsoft.Json 
+@using Newtonsoft.Json
+
+@*@inject AuthenticationStateProvider AuthenticationStateProvider*@
 
 @inject AuthenticationService authService
 @inject NavigationManager navigationManager
 @inject HttpClient Http
-    @*<pre><code>app.UseCors(policy => 
+@*<pre><code>app.UseCors(policy =>
     policy.WithOrigins("http://localhost:5000", "https://localhost:5001")
     .AllowAnyMethod()
     .WithHeaders(HeaderNames.ContentType));</code></pre>*@
 <div class="row">
     <div class="col-12">
-        <h2>Neuen Benutzer erstellen</h2>
+        @*<h2>Neuen Benutzer erstellen</h2>*@
         <EditForm Model="model" OnValidSubmit="RegisterUser">
             <RadzenCard>
                 <DataAnnotationsValidator>
@@ -20,33 +23,33 @@
                 </DataAnnotationsValidator>
                 <ValidationSummary />
                 @*<label>Vorname</label>
-                <RadzenTextBox @bind-Value="model.FirstName"></RadzenTextBox>
+                    <RadzenTextBox @bind-Value="model.FirstName"></RadzenTextBox>
 
-                <label>Nachname</label>
-                <RadzenTextBox @bind-Value="model.LastName"></RadzenTextBox>*@
+                    <label>Nachname</label>
+                    <RadzenTextBox @bind-Value="model.LastName"></RadzenTextBox>*@
 
                 <label>Email</label>
-                <RadzenTextBox @bind-Value="model.Mail"></RadzenTextBox>
+                <RadzenTextBox @bind-Value="model.mail"></RadzenTextBox>
 
                 <label>Passwort</label>
-                <RadzenPassword @bind-Value="model.Password"></RadzenPassword>
+                <RadzenPassword @bind-Value="model.password"></RadzenPassword>
 
                 @*<label>Password bestätigen</label>
-                <RadzenTextBox @bind-Value="model.ConfirmPassword"></RadzenTextBox>*@
+                    <RadzenTextBox @bind-Value="model.ConfirmPassword"></RadzenTextBox>*@
 
                 <hr />
-                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Registrieren" ButtonStyle="Radzen.ButtonStyle.Primary" class="btn-block mr-2"
+                <RadzenButton Style="margin-bottom: 20px; width: 150px" ButtonType="Radzen.ButtonType.Submit" Text="Anmelden" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2"
                               Disabled="isBusy">
 
 
                 </RadzenButton>
 
-                <RadzenButton ButtonType="Radzen.ButtonType.Button" Text="Anmelden" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2">
+                @*<RadzenButton ButtonType="Radzen.ButtonType.Button" Style="margin-bottom: 20px; width: 150px" Text="Anmelden" ButtonStyle="Radzen.ButtonStyle.Secondary" class="btn-block mr-2">
 
 
-                </RadzenButton>
+                    </RadzenButton>*@
             </RadzenCard>
-        </EditForm> 
+        </EditForm>
     </div>
 </div>
 @code {
@@ -54,23 +57,26 @@
 
     bool isBusy = false;
 
-    public async Task RegisterUser()
+    public async Task<bool> RegisterUser()
     {
 
         string serializedUser = JsonConvert.SerializeObject(model);
+        Console.WriteLine(serializedUser);
 
         HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
 
         httpRequestMessage.Method = new HttpMethod("POST");
         httpRequestMessage.RequestUri = new Uri("https://www.online.holter.at/PGM4/OD000R.PGM");
-        httpRequestMessage.Content = new StringContent(serializedUser);
-        //, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
-       // httpRequestMessage.Content = new StringContent(serializedUser);
+        httpRequestMessage.Content = new StringContent(serializedUser, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
+        // httpRequestMessage.Content = new StringContent(serializedUser);
 
         httpRequestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
         Console.WriteLine(httpRequestMessage);
         var response = await Http.SendAsync(httpRequestMessage);
+        // var response = await authService.RegisterUserAsync(model);
+
+        Console.WriteLine(response);
 
         Console.WriteLine(response.Headers);
         Console.WriteLine(response.Content);
@@ -78,10 +84,13 @@
         var responseStatus = response.StatusCode;
         var responseBody = await response.Content.ReadAsStringAsync();
 
-        if(responseStatus.ToString() == "OK")
+
+        if (responseStatus.ToString() == "OK")
         {
+
             var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
             Console.WriteLine(returnedUser);
+            navigationManager.NavigateTo("hello");
 
 
         }
@@ -90,16 +99,19 @@
 
         }
 
-        Console.WriteLine(responseStatus);
-        Console.WriteLine(responseBody);
 
-        //  var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
+        //Console.WriteLine(responseStatus);
+        //Console.WriteLine(responseBody);
 
-        // Console.WriteLine(returnedUser);
+        // var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
+
+        //    Console.WriteLine(returnedUser);
 
 
         isBusy = true;
         string message = string.Empty;
+        return await Task.FromResult(true);
+
 
         //var result = await authService.RegisterUserAsync(model);
         //Console.WriteLine(result.Status);

@@ -10,7 +10,7 @@ namespace Webshop.Shared.Models.Requests
         [Required]
         [StringLength(50)]
         [EmailAddress]
-        public string Mail { get; set; }
+        public string mail { get; set; }
 
         //[Required]
         //[StringLength(25)]
@@ -22,7 +22,7 @@ namespace Webshop.Shared.Models.Requests
 
         [Required]
         [StringLength(50)]
-        public string Password { get; set; }
+        public string password { get; set; }
 
         //[Required]
         //[StringLength(50)]
