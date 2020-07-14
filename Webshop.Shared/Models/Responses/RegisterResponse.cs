@@ -12,7 +12,7 @@ namespace Webshop.Shared.Models.Responses
         public string Status { get; set; }
 
         [JsonProperty(PropertyName="data")]
-        public List<Data> Data { get; set; }
+        public Data Data { get; set; }
        // public string[] Error { get; set; }
 
     }

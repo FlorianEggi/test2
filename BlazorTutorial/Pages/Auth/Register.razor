@@ -102,7 +102,7 @@
 
         httpRequestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
-        Console.WriteLine(httpRequestMessage);
+        //Console.WriteLine(httpRequestMessage);
 
         var formDictionary = new Dictionary<string, string>();
         formDictionary.Add("mail", model.mail);
@@ -150,9 +150,10 @@
             //Console.WriteLine(a);
             var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
             //var x= returnedUser.Select(x => x.Data).ToList();
-            
-             //   Console.WriteLine(returnedUser.FirstOrDefault());
-            
+
+            Console.WriteLine(returnedUser.Data.Sessionid);
+            //   Console.WriteLine(returnedUser.FirstOrDefault());
+
             // Console.WriteLine(returnedUser);
             //    // navigationManager.NavigateTo("hello");
 
