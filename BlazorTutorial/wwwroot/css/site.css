@@ -1,4 +1,6 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('_content/MatBlazor/dist/matBlazor.css');
+
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -35,12 +37,12 @@ app {
         border-bottom: 1px solid #d6d5d5;
         justify-content: flex-start;
     }
-        .main .top-row .img {
+        /*.main .top-row .img {
             display: block;
             margin-left: auto;
             margin-right: auto;
             width: 50%;
-        }
+        }*/
 
 
 
@@ -179,3 +181,4 @@ app {
         display: block;
     }
 }
+
