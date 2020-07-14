@@ -1,7 +1,120 @@
-﻿@layout AuthLayout
 
-<h1>Hello, world!</h1>
+@page "/Home"
 
-Welcome to your new app.
+@using MatBlazor
 
-@*<RadzenButton Text="Welcome"></RadzenButton>*@
+<style>
+    .center {
+        text-align: center;
+        width: 100%
+    }
+
+    .demo-mat-card {
+        max-width: 400px;
+    }
+
+    .demo-mat-card-content {
+        padding: 1rem;
+    }
+
+    .demo-mat-card-clean-margin {
+        margin: 0px;
+    }
+</style>
+
+<div class="center">
+
+    <MatTextField @bind-Value="@myStringValue" Label="Suche" Outlined="true"></MatTextField>
+    <MatIconButton Icon="search"></MatIconButton>
+
+</div>
+
+
+
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        @foreach (var product in ListProducts)
+        {
+            <div class="mat-layout-grid-cell">
+                <MatCard class="demo-mat-card">
+                    <MatCardContent>
+                        <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
+                        <div class="demo-mat-card-content">
+                            <MatHeadline6 class="demo-mat-card-clean-margin">
+                                @product.Name
+                            </MatHeadline6>
+                            <MatSubtitle2 class="demo-mat-card-clean-margin">
+                                von Lukas Humer
+                            </MatSubtitle2>
+                        </div>
+
+                        <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                            @product.Description
+                        </MatBody2>
+                    </MatCardContent>
+                    <MatCardActions>
+                        <MatNumericUpDownField Label="Anzahl"
+                                               @bind-Value=@amount
+                                               Minimum=1></MatNumericUpDownField>
+                    </MatCardActions>
+
+                    <MatCardActions>
+                        <MatSelectItem Label="Warenkorb" Items="@warenkorbItems"></MatSelectItem>
+                        <MatIconButton Icon="description" OnClick="@OnClickDescription"></MatIconButton>
+                        <MatButton>In den Warenkorb</MatButton>
+                    </MatCardActions>
+                </MatCard>
+            </div>
+        }
+
+
+
+    </div>
+</div>
+
+@code
+{
+    private string myStringValue;
+
+    public string MyStringValue
+    {
+        get { return myStringValue; }
+        set { myStringValue = value; }
+    }
+
+
+
+    string[] warenkorbItems = new[]
+           {
+                "w1",
+                "w2",
+                "w3",
+            };
+
+
+
+    List<Webshop.DTO.Product> ListProducts = new List<DTO.Product>()
+{ new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Rohr123", Price = 1.12 }
+          , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
+     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
+     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
+     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }};
+
+
+
+
+    //SearchedItems
+    private int amount;
+
+    public int Amount
+    {
+        get { return amount; }
+        set { amount = value; }
+    }
+
+    public void OnClickDescription(MouseEventArgs e)
+    {
+
+    }
+}
+

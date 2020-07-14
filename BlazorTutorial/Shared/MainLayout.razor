@@ -5,27 +5,15 @@
 </div>
 
 <div class="main">
- 
-        <RadzenProfileMenu>
-            <Template>
-                <RadzenGravatar Email="user@example.com">
-                </RadzenGravatar>
-            </Template>
-            <ChildContent>
-                <RadzenProfileMenuItem Text="Buttons" Path="buttons" Icon="account_circle"></RadzenProfileMenuItem>
-                <RadzenProfileMenuItem Text="Menu" Path="menu" Icon="line_weight"></RadzenProfileMenuItem>
-                <RadzenProfileMenuItem Text="FileInput" Path="fileinput" Icon="attach_file"></RadzenProfileMenuItem>
-                <RadzenProfileMenuItem Text="Dialog" Path="dialog" Icon="perm_media"></RadzenProfileMenuItem>
-                <RadzenProfileMenuItem Text="Notification" Path="notification" Icon="announcement"></RadzenProfileMenuItem>
-            </ChildContent>
-        </RadzenProfileMenu>
-    
-    <div class="top-row px-4">
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+    <div class="top-row">
+        <MatH4 class="center">
+            Welcome to Holter Online
+        </MatH4>
+        <img src="Images/HolterLogo.png" asp-append-version="true" height="30" />
 
     </div>
 
-    <div class="content px-4">
+    <div class="content">
         @Body
     </div>
 </div>
