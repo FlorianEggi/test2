@@ -18,6 +18,9 @@ namespace Webshop
                 return new AuthenticationService(url);
             });
 
+            var corsAttr = new Microsoft.AspNetCore.Cors.EnableCorsAttribute();
+
+            
             //WebAssemblyHttpMessageHandlerOptions.DefaultCredentials = FetchCredentialsOption.Include;
 
             builder.RootComponents.Add<App>("app");

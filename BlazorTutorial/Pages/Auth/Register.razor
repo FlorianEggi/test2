@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="form-group">
-                        <MatTextField @bind-Value="model.password" id="password" Label="Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" tabindex="1"></MatTextField>
+                        <MatTextField @bind-Value="model.password" Type="password"id="password" Label="Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" tabindex="1"></MatTextField>
                     </div>
 
                     <div class="form-group">
@@ -109,37 +109,61 @@
         formDictionary.Add("password", model.password);
 
         var formContent = new FormUrlEncodedContent(formDictionary);
+        // formContent.Headers.Add("Accept","Access-Control-Allow-Origin");
+        var corsAttr = new Microsoft.AspNetCore.Cors.EnableCorsAttribute();
 
-        var response = await Http.PostAsync("https://www.online.holter.at/PGM4/OD000R.PGM", formContent);
 
+        var url = "https://www.online.holter.at/PGM4/OD000R.PGM";
 
         // var response = await Http.SendAsync(httpRequestMessage);
-        // var response = await authService.RegisterUserAsync(model);
+        var response2 = await Http.PostAsync(url, formContent);
 
-        Console.WriteLine(response);
+        // var response2 = await authService.RegisterUserAsync(url, formContent);
 
-        Console.WriteLine(response.Headers);
-        Console.WriteLine(response.Content);
+        Console.WriteLine(response2.StatusCode);
+
+        //Console.WriteLine(response.Headers);
+
+        //Console.WriteLine(response.Content);
 
         //var responseStatus = response.StatusCode;
-        //var responseBody = await response.Content.ReadAsStringAsync();
-        navigationManager.NavigateTo("counter");
-        isBusy = false;
+        var responseBody = await response2.Content.ReadAsStringAsync();
+        Console.WriteLine(responseBody);
 
 
-        //if (responseStatus.ToString() == "OK")
-        //{
-
-        //    //var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
-        //    //Console.WriteLine(returnedUser);
-        //    // navigationManager.NavigateTo("hello");
+        if (response2.StatusCode.ToString() == "OK")
+        {
 
 
-        //}
-        //else
-        //{
+            //dynamic task = Newtonsoft.Json.Linq.JObject.Parse(responseBody);
+            //var o = Newtonsoft.Json.Linq.JObject.Parse(responseBody);
 
-        //}
+            //// Console.WriteLine(o);
+            //var a = o.SelectToken("data").Select(jt => jt.ToObject<Webshop.Shared.Models.Responses.RegisterResponse>()).ToList();
+            //foreach (var item in a)
+            //{
+            //    foreach (var item2 in item.Data)
+            //    {
+            //        Console.WriteLine(item2.SessionId); 
+            //    }
+            //}
+            //Console.WriteLine(a);
+            var returnedUser = JsonConvert.DeserializeObject<Webshop.Shared.Models.Responses.RegisterResponse>(responseBody);
+            //var x= returnedUser.Select(x => x.Data).ToList();
+            
+             //   Console.WriteLine(returnedUser.FirstOrDefault());
+            
+            // Console.WriteLine(returnedUser);
+            //    // navigationManager.NavigateTo("hello");
+
+
+            navigationManager.NavigateTo("counter");
+            isBusy = false;
+        }
+        else
+        {
+
+        }
 
 
         //Console.WriteLine(responseStatus);

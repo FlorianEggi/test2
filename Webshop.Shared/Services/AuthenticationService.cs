@@ -12,21 +12,27 @@ namespace Webshop.Shared.Services
     public class AuthenticationService 
     {
         private readonly string _baseUrl;
+        HttpClient Http;
 
-       ServiceClient client = new ServiceClient();
+        //  ServiceClient client = new ServiceClient();
 
         public AuthenticationService(string url)
         {
             _baseUrl = url;
         }
 
-        public async Task<RegisterResponse> RegisterUserAsync(RegisterRequest request)
+        public async Task<RegisterResponse> RegisterUserAsync(string url, FormUrlEncodedContent formContent )
         {
+            var result = await Http.PostAsync(url, formContent);
+
+            return null;
 
 
-            var result = await client.PostAsync<RegisterResponse>($"{_baseUrl}/PGM4/OD000R.PGM", request);
-           // return null;
-            return result.Result;
+           // var result = await Http.SendAsync(httpRequestMessage);
+
+            //var result = await client.PostAsync<RegisterResponse>($"{_baseUrl}/PGM4/OD000R.PGM", request);
+            // return null;
+           // return result.Result;
         }
     }
 
