@@ -13,9 +13,9 @@ namespace Webshop
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.Services.AddScoped<AuthenticationService>(s =>
+            builder.Services.AddScoped<Service>(s =>
             {
-                return new AuthenticationService(url);
+                return new Service(url);
             });
 
             var corsAttr = new Microsoft.AspNetCore.Cors.EnableCorsAttribute();
