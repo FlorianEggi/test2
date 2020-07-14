@@ -1,17 +1,17 @@
-using Microsoft.AspNetCore.Components.Builder;
-using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.AspNetCore.Components.Builder;
+//using Microsoft.Extensions.DependencyInjection;
 
-namespace BlazorTutorial
-{
-    public class Startup
-    {
-        public void ConfigureServices(IServiceCollection services)
-        {
-        }
+//namespace Webshop
+//{
+//    public class Startup
+//    {
+//        public void ConfigureServices(IServiceCollection services)
+//        {
+//        }
 
-        public void Configure(IComponentsApplicationBuilder app)
-        {
-            app.AddComponent<App>("app");
-        }
-    }
-}
+//        public void Configure(IComponentsApplicationBuilder app)
+//        {
+//            app.AddComponent<App>("app");
+//        }
+//    }
+//}
