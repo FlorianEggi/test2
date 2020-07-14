@@ -24,46 +24,53 @@
 
 <div class="center">
 
-    <MatSelectItem Label="Kategorie" Items="@categorieItems"></MatSelectItem>
     <MatTextField @bind-Value="@myStringValue" Label="Suche" Outlined="true"></MatTextField>
     <MatIconButton Icon="search"></MatIconButton>
 
 </div>
 
-@foreach (var product in ListProducts)
-{
-    <MatCard class="demo-mat-card">
-        <MatCardContent>
-            <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
-            <div class="demo-mat-card-content">
-                <MatHeadline6 class="demo-mat-card-clean-margin">
-                    @product.Name
-                </MatHeadline6>
-                <MatSubtitle2 class="demo-mat-card-clean-margin">
-                    von Lukas Humer
-                </MatSubtitle2>
+
+
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        @foreach (var product in ListProducts)
+        {
+            <div class="mat-layout-grid-cell">
+                <MatCard class="demo-mat-card">
+                    <MatCardContent>
+                        <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
+                        <div class="demo-mat-card-content">
+                            <MatHeadline6 class="demo-mat-card-clean-margin">
+                                @product.Name
+                            </MatHeadline6>
+                            <MatSubtitle2 class="demo-mat-card-clean-margin">
+                                von Lukas Humer
+                            </MatSubtitle2>
+                        </div>
+
+                        <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                            @product.Description
+                        </MatBody2>
+                    </MatCardContent>
+                    <MatCardActions>
+                        <MatNumericUpDownField Label="Anzahl"
+                                               @bind-Value=@amount
+                                               Minimum=1></MatNumericUpDownField>
+                    </MatCardActions>
+
+                    <MatCardActions>
+                        <MatSelectItem Label="Warenkorb" Items="@warenkorbItems"></MatSelectItem>
+                        <MatIconButton Icon="description" OnClick="@OnClickDescription"></MatIconButton>
+                        <MatButton>In den Warenkorb</MatButton>
+                    </MatCardActions>
+                </MatCard>
             </div>
-
-            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                @product.Description
-            </MatBody2>
-        </MatCardContent>
-        <MatCardActions>
-            <MatNumericUpDownField Label="Anzahl"
-                                   @bind-Value=@amount
-                                   Minimum=1></MatNumericUpDownField>
-
-        </MatCardActions>
-        <br />
-        <MatCardActions>
-            <MatSelectItem Label="Warenkorb" Items="@warenkorbItems"></MatSelectItem>
-            <MatIconButton Icon="description" OnClick="@OnClickDescription"></MatIconButton>
-            <MatButton>Bestellen</MatButton>
-        </MatCardActions>
-    </MatCard>
-}
+        }
 
 
+
+    </div>
+</div>
 
 @code
 {
@@ -75,12 +82,7 @@
         set { myStringValue = value; }
     }
 
-    string[] categorieItems = new[]
-            {
-                "Rohre",
-                "Stangen",
-                "sonsiges",
-            };
+
 
     string[] warenkorbItems = new[]
            {
@@ -92,8 +94,11 @@
 
 
     List<BlazorTutorial.DTO.Product> ListProducts = new List<DTO.Product>()
-        { new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Rohr123", Price = 1.12 }
-          , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 } };
+{ new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Rohr123", Price = 1.12 }
+          , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
+     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
+     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
+     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }};
 
 
 
@@ -109,7 +114,7 @@
 
     public void OnClickDescription(MouseEventArgs e)
     {
-        //JsRuntime.InvokeAsync<object>("window.alert", "Test");
+
     }
 }
 
