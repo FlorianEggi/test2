@@ -1,8 +1,7 @@
-
 @page "/Home"
+
 @inject Service service
 @using Webshop.Shared.Models.Requests.Search
-
 
 @using MatBlazor
 
@@ -25,90 +24,42 @@
     }
 </style>
 
-@*<EditForm Model="model">*@
-    <div class="center">
+<div class="center">
+    <MatTextField @bind-Value="@searchTerm" Label="Suche" Outlined="true"></MatTextField>
+    <MatIconButton @onclick="@SearchClicked" Icon="search"></MatIconButton>
+</div>
 
-        <MatTextField @bind-Value="@myStringValue" Label="Suche" Outlined="true"></MatTextField>
-        <MatIconButton 
-                       Icon="search"></MatIconButton>
-
+<div>
+        <MatTable Items="@ListProducts" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Horsepower</th>
+            </MatTableHeader>
+            <MatTableRow>
+                <td>@context.Datanormname1 <br />
+                @context.Datanormname2
+                </td>
+                <td>@context.Unit</td>
+                <td>@context.Grossprice</td>
+            </MatTableRow>
+        </MatTable>
     </div>
 
 
-
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            @foreach (var product in ListProducts)
-            {
-                <div class="mat-layout-grid-cell">
-                    <MatCard class="demo-mat-card">
-                        <MatCardContent>
-                            <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
-                            <div class="demo-mat-card-content">
-                                <MatHeadline6 class="demo-mat-card-clean-margin">
-                                    @product.Name
-                                </MatHeadline6>
-                                <MatSubtitle2 class="demo-mat-card-clean-margin">
-                                    von Lukas Humer
-                                </MatSubtitle2>
-                            </div>
-
-                            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                                @product.Description
-                            </MatBody2>
-                        </MatCardContent>
-                        <MatCardActions>
-                            <MatNumericUpDownField Label="Anzahl"
-                                                   @bind-Value=@amount
-                                                   Minimum=1></MatNumericUpDownField>
-                        </MatCardActions>
-
-                        <MatCardActions>
-                            <MatSelectItem Label="Warenkorb" Items="@warenkorbItems"></MatSelectItem>
-                            <MatIconButton Icon="description" OnClick="@OnClickDescription"></MatIconButton>
-                            <MatButton>In den Warenkorb</MatButton>
-                        </MatCardActions>
-                    </MatCard>
-                </div>
-            }
-
-
-
-        </div>
-    </div>
-@*</EditForm>*@
 
 @code
 {
-
-    SearchRequest model = new SearchRequest();
-    string baseUrl = "https://www.online.holter.at/PGM4";
-
     //bind-Values mit model. ersetzen
     //in editform model definieren
 
-    public async Task<bool> Search()
+    private string searchTerm;
+
+    public string SearchTerm
     {
-        //wenn man auf search drückt soll diese Methode aufgerufen werden
-
-        var searchUrl = $"{baseUrl}/OD300R.PGM";
-
-        var searched = service.SearchResponseAsync(searchUrl, model);
-        //für Luki
-        return await Task.FromResult(true);
-
+        get { return searchTerm; }
+        set { searchTerm = value; }
     }
-
-
-    private string myStringValue;
-
-    public string MyStringValue
-    {
-        get { return myStringValue; }
-        set { myStringValue = value; }
-    }
-
-
 
     string[] warenkorbItems = new[]
            {
@@ -117,25 +68,76 @@
                 "w3",
             };
 
+    public IList<Webshop.DTO.Product> ListProducts = new List<DTO.Product>
+            ()
+{
+        new DTO.Product { itemid = "HAG1234",
+        Datanormname1 = "Rohr",
+    Datanormname2 = "",
+    Codestockitem = "L",
+    Unit = "PCE",
+    Grossprice= "123",
+    Discountgroup= "A2B1"}
+           };
 
 
-    List<Webshop.DTO.Product> ListProducts = new List<DTO.Product>()
-{ new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Rohr123", Price = 1.12 }
-          , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
-     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
-     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }
-     , new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 }};
+
+    //private Webshop.Shared.Models.Responses.Search.SearchResponse searchResponseModel;
+
+
+    //public Webshop.Shared.Models.Responses.Search.SearchResponse SearchResponseModel
+    //{
+    //    get { return searchResponseModel; }
+    //    set
+    //    {
+
+    //        searchResponseModel = value;
+
+    //    }
+    //}
+
+    //public async void InitCard()
+    //{
+    //    model.searchterms = "AT9";
+    //    model.displaycount = "5";   //paginator
+    //    var searchUrl = $"{baseUrl}/OD300R.PGM";
+    //    var searched = await service.SearchResponseAsync(searchUrl, model);
+    //    Console.WriteLine("SearchResults: " + searched.Data.Searchresults);
+    //    searchResponseModel = searched;
+
+
+    //}
 
 
 
 
     //SearchedItems
-    private int amount;
 
-    public int Amount
+    SearchRequest model = new SearchRequest();
+    string baseUrl = "https://www.online.holter.at/PGM4";
+
+    public async void SearchClicked(MouseEventArgs e)
     {
-        get { return amount; }
-        set { amount = value; }
+        Console.WriteLine("---------------------------");
+        Console.WriteLine("SearchTerm: " + searchTerm);
+
+        var searchUrl = $"{baseUrl}/OD300R.PGM";
+        model.searchterms = searchTerm;
+        model.displaycount = "5";   //paginator
+        var searched = await service.SearchResponseAsync(searchUrl, model);
+        //Console.WriteLine("SearchResults: " + searched.Data.Searchresults);
+        searched.Data.Searchresults.ForEach(x => ListProducts.Add(new DTO.Product
+        {
+            itemid = x.Itemid,
+            Datanormname1 = x.Datanormname1,
+            Datanormname2 = x.Datanormname2,
+            Codestockitem = x.Codestockitem,
+            Unit = x.Unit,
+            Grossprice = x.Grossprice,
+            Discountgroup = x.Discountgroup
+        }));
+
+        Console.WriteLine("SearchResults: " + ListProducts[3].Datanormname1);
     }
 
     public void OnClickDescription(MouseEventArgs e)
@@ -143,4 +145,3 @@
 
     }
 }
-

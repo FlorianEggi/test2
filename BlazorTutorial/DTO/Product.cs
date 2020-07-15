@@ -7,10 +7,16 @@ namespace Webshop.DTO
 {
     public class Product
     {
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public string Description { get; set; }
-        public int Amount { get; set; }
-        public string ImagePath { get; set; }
+        public string itemid { get; set; }
+        public string Datanormname1 { get; set; }
+        public string Datanormname2 { get; set; }
+        public string Codestockitem { get; set; }
+        public string Unit { get; set; }
+        public string Grossprice { get; set; }
+        public string Discountgroup { get; set; }
+
+
+
+
     }
 }
