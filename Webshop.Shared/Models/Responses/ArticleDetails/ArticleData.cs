@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Webshop.Shared.Models.Responses.ArticleDetails
 {
@@ -38,21 +39,21 @@ namespace Webshop.Shared.Models.Responses.ArticleDetails
 
         [JsonProperty("pictures")]
 
-        public Picture Pictures { get; set; }
+        public List<Picture> Pictures { get; set; }
 
         [JsonProperty("packaging")]
 
-        public Packaging Packaging { get; set; }
+        public List<Packaging> Packaging { get; set; }
 
         [JsonProperty("discount")]
 
-        public Discount Discount { get; set; }
+        public List<Discount> Discount { get; set; }
 
         [JsonProperty("discountgroup")]
 
         public string Discountgroup { get; set; }
 
-        [JsonProperty("discountgroup")]
+        [JsonProperty("discountgroupname")]
 
         public string Discountgroupname { get; set; }
 

@@ -13,7 +13,7 @@ namespace Webshop.Shared.Models.Requests.Register
         public string mail { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [MaxLength(20)]
         public string password { get; set; }
 
       

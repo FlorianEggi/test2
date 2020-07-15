@@ -101,20 +101,6 @@
 
         var loginUrl = $"{baseUrl}/OD000R.PGM";
 
-        // var response = await Http.SendAsync(httpRequestMessage);
-        //   var response2 = await Http.PostAsync(url, formContent);
-
-        // var response2 = await authService.RegisterUserAsync(url, formContent);
-
-        // Console.WriteLine(response2.StatusCode);
-
-        //Console.WriteLine(response.Headers);
-
-        //Console.WriteLine(response.Content);
-
-        //var responseStatus = response.StatusCode;
-        //var responseBody = await response2.Content.ReadAsStringAsync();
-        // Console.WriteLine(responseBody);
 
         var loginRequest = await authService.RegisterUserAsync(loginUrl, model);
 
@@ -140,6 +126,8 @@
             isBusy = false;
         }
 
+
+        #region DemoServiceRequests
         //var searchUrl = $"{baseUrl}/OD300R.PGM";
         //var req = await authService.SearchResponseAsync(searchUrl,null);
 
@@ -147,6 +135,22 @@
         //{
         //    Console.WriteLine(item.Itemid + " " + item.Datanormname1);
         //}
+
+
+        //var articleDetailUrl = $"{baseUrl}/OD310R.PGM";
+        //var articleDetail = await authService.ArticleDetailResponseAsync(articleDetailUrl, null);
+
+        //Console.WriteLine(articleDetail.Data.Datanormname1);
+
+
+
+
+        //var shoppingCartListUrl = $"{baseUrl}/OD201R.PGM";
+        //var shoppingCarts = await authService.ShoppingCartResponseAsync(shoppingCartListUrl);
+
+
+
+        #endregion
 
         return await Task.FromResult(true);
 
