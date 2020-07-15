@@ -25,12 +25,17 @@ namespace Webshop.Shared.Models.Responses.Search
         public string Unit { get; set; }
 
         [JsonProperty("grossprice")]
-        public int Grossprice { get; set; }
+        public string Grossprice { get; set; }
 
         [JsonProperty("discountgroup")]
         public string Discountgroup { get; set; }
 
-      
+
+        public override string ToString()
+        {
+            return $"{Itemid} {Datanormname1} {Datanormname2} {Codestockitem} {Unit} {Grossprice} {Discountgroup}";
+        }
+
 
     }
 }

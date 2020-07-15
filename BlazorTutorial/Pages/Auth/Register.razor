@@ -94,7 +94,7 @@
 
         httpRequestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
-       
+
         // formContent.Headers.Add("Accept","Access-Control-Allow-Origin");
         var corsAttr = new Microsoft.AspNetCore.Cors.EnableCorsAttribute();
 
@@ -116,7 +116,7 @@
         //var responseBody = await response2.Content.ReadAsStringAsync();
         // Console.WriteLine(responseBody);
 
-        var loginRequest =  await authService.RegisterUserAsync(loginUrl, model);
+        var loginRequest = await authService.RegisterUserAsync(loginUrl, model);
 
 
         if (loginRequest.Status.ToString() == "OK")
@@ -132,12 +132,21 @@
 
             navigationManager.NavigateTo("Home");
             isBusy = false;
+
+
         }
         else
         {
             isBusy = false;
         }
 
+        //var searchUrl = $"{baseUrl}/OD300R.PGM";
+        //var req = await authService.SearchResponseAsync(searchUrl,null);
+
+        //foreach (var item in req.Data.Searchresults)
+        //{
+        //    Console.WriteLine(item.Itemid + " " + item.Datanormname1);
+        //}
 
         return await Task.FromResult(true);
 

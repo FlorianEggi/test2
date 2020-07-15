@@ -5,17 +5,17 @@ using System.Text;
 
 namespace Webshop.Shared.Models.Requests.Search
 {
-    public class SearchResponse
+    public class SearchRequest
     {
         [StringLength(60)]
         public string sessionid { get; set; }
 
-        public bool codestockitems { get; set; }
+        public string codestockitems { get; set; }
 
         [StringLength(60)]
 
         public string searchterms { get; set; }
 
-        public int displaycount { get; set; }
+        public string displaycount { get; set; }
     }
 }
