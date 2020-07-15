@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Webshop.Shared.Models.Requests.AddItemToCart;
 using Webshop.Shared.Models.Requests.ArticleDetails;
 using Webshop.Shared.Models.Requests.ChangeCurrentCart;
 using Webshop.Shared.Models.Requests.NewShoppingCart;
 using Webshop.Shared.Models.Requests.Register;
 using Webshop.Shared.Models.Requests.Search;
+using Webshop.Shared.Models.Requests.ShowShoppingCart;
+using Webshop.Shared.Models.Responses.AddItemToCart;
 using Webshop.Shared.Models.Responses.ArticleDetails;
 using Webshop.Shared.Models.Responses.ChangeCurrentCart;
 using Webshop.Shared.Models.Responses.NewShoppingCart;
 using Webshop.Shared.Models.Responses.Register;
 using Webshop.Shared.Models.Responses.Search;
 using Webshop.Shared.Models.Responses.ShoppingCarts;
+using Webshop.Shared.Models.Responses.ShowShoppingCart;
 
 namespace Webshop.Shared.Services
 {
@@ -30,6 +34,9 @@ namespace Webshop.Shared.Services
 
         Task<ChangeCurrentCartResponse> ChangeCurrentCartResponseAsync(string url, ChangeCurrentCartRequest model);
 
+        Task<ShowShoppingCartResponse> ShowShoppingCartResponseAsync(string url, ShowShoppingCartRequest model);
+
+        Task<AddItemToCartResponse> AddShoppingCartResponseAsync(string url, AddItemToCartRequest model);
 
     }
 }

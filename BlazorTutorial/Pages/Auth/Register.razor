@@ -129,7 +129,7 @@
 
         #region DemoServiceRequests
         //var searchUrl = $"{baseUrl}/OD300R.PGM";
-        //var req = await authService.SearchResponseAsync(searchUrl,null);
+        //var req = await authService.SearchResponseAsync(searchUrl,model);
         //foreach (var item in req.Data.Searchresults)
         //{
         //    Console.WriteLine(item.Itemid + " " + item.Datanormname1);
@@ -137,7 +137,7 @@
 
 
         //var articleDetailUrl = $"{baseUrl}/OD310R.PGM";
-        //var articleDetail = await authService.ArticleDetailResponseAsync(articleDetailUrl, null);
+        //var articleDetail = await authService.ArticleDetailResponseAsync(articleDetailUrl, model);
         //Console.WriteLine(articleDetail.Data.Datanormname1);
 
 
@@ -149,12 +149,17 @@
 
 
         //var newShoppingCart = $"{baseUrl}/OD200R.PGM";
-        //var shoppingCarts = await authService.NewShoppingCartResponseAsync(newShoppingCart, null);
+        //var shoppingCarts = await authService.NewShoppingCartResponseAsync(newShoppingCart, model);
 
         //var changeShoppingCart = $"{baseUrl}/OD210R.PGM";
-        //var shoppingCartChange = await authService.ChangeCurrentCartResponseAsync(newShoppingCart, null);
+        //var shoppingCartChange = await authService.ChangeCurrentCartResponseAsync(newShoppingCart, model);
 
 
+        //var showShoppingCar = $"{baseUrl}/OD202R.PGM";
+        //var shoppingCartShow = await authService.ChangeCurrentCartResponseAsync(showShoppingCar, model);
+
+        //var addToItemCart = $"{baseUrl}/OD220R.PGM";
+        //var addToCart = await authService.AddShoppingCartResponseAsync(addToItemCart, model);
 
         #endregion
 
