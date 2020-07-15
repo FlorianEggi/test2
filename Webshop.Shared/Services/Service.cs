@@ -14,21 +14,25 @@ using Webshop.Shared.Models.Responses.ArticleDetails;
 using Webshop.Shared.Models.Requests.ArticleDetails;
 using Webshop.Shared.Models.Responses.ShoppingCarts;
 using Webshop.Shared.Models.Requests.ShoppingCarts;
+using Webshop.Shared.Models.Responses.NewShoppingCart;
+using Webshop.Shared.Models.Requests.NewShoppingCart;
+using Webshop.Shared.Models.Responses.ChangeCurrentCart;
+using Webshop.Shared.Models.Requests.ChangeCurrentCart;
 
 namespace Webshop.Shared.Services
 {
-    public class Service 
+    public class Service : IService
     {
         private readonly string _baseUrl;
         HttpClient Http = new HttpClient();
         string sessionIds;
-        //  ServiceClient client = new ServiceClient();
 
         public Service(string url)
         {
             _baseUrl = url;
         }
 
+        #region POST Register
         public async Task<RegisterResponse> RegisterUserAsync(string url, RegisterRequest model )
         {
             // var loginUrl = $"{url}/OD000R.PGM";
@@ -55,8 +59,9 @@ namespace Webshop.Shared.Services
             return returnedUser;
 
         }
+        #endregion
 
-
+        #region POST Search
         public async Task<SearchResponse> SearchResponseAsync(string url, SearchRequest model)
         {
             // var loginUrl = $"{url}/OD000R.PGM";
@@ -97,8 +102,9 @@ namespace Webshop.Shared.Services
             return returnedSearch;
 
         }
+        #endregion
 
-
+        #region POST ArticleDetail
         public async Task<ArticleDetailResponse> ArticleDetailResponseAsync(string url, ArticleDetailRequest model)
         {
             var formDictionary = new Dictionary<string, string>();
@@ -132,9 +138,10 @@ namespace Webshop.Shared.Services
             return returnedArticle;
 
         }
+        #endregion
 
-
-        public async Task<ShoppingCartResponse> ShoppingCartResponseAsync(string url)
+        #region POST ShoppingCartList
+        public async Task<ShoppingCartResponse> ShoppingCartListResponseAsync(string url)
         {
             var formDictionary = new Dictionary<string, string>();
 
@@ -160,6 +167,75 @@ namespace Webshop.Shared.Services
             return returnedCartList;
 
         }
+
+        #endregion
+
+        #region POST NewShoppingCart
+
+        public async Task<NewShoppingCartResponse> NewShoppingCartResponseAsync(string url, NewShoppingCartRequest model)
+        {
+            var formDictionary = new Dictionary<string, string>();
+
+            formDictionary.Add("sessionid", sessionIds);
+            if(model != null)
+            {
+                formDictionary.Add("commissionid", model.commissionid);
+
+            }
+
+            var formContent = new FormUrlEncodedContent(formDictionary);
+            var cartRequest = await Http.PostAsync(url, formContent);
+
+
+            Console.WriteLine(cartRequest.StatusCode);
+
+
+            var responseBody = await cartRequest.Content.ReadAsStringAsync();
+            Console.WriteLine(responseBody);
+            var returnedNewCart = JsonConvert.DeserializeObject<NewShoppingCartResponse>(responseBody);
+
+            if (returnedNewCart.Status == "OK")
+            {
+                Console.WriteLine(returnedNewCart);
+
+            }
+            return returnedNewCart;
+        }
+
+
+        #endregion
+
+        #region POST CurrentCart
+        public async Task<ChangeCurrentCartResponse> ChangeCurrentCartResponseAsync(string url, ChangeCurrentCartRequest model)
+        {
+            var formDictionary = new Dictionary<string, string>();
+
+            formDictionary.Add("sessionid", sessionIds);
+            //formDictionary.Add("cartid", "3897264");
+
+            formDictionary.Add("cartid", model.cartid);
+
+            
+
+            var formContent = new FormUrlEncodedContent(formDictionary);
+            var cartRequest = await Http.PostAsync(url, formContent);
+
+
+            Console.WriteLine(cartRequest.StatusCode);
+
+
+            var responseBody = await cartRequest.Content.ReadAsStringAsync();
+            Console.WriteLine(responseBody);
+            var returnedChangeCart = JsonConvert.DeserializeObject<ChangeCurrentCartResponse>(responseBody);
+
+            if (returnedChangeCart.Status == "OK")
+            {
+                Console.WriteLine(returnedChangeCart);
+
+            }
+            return returnedChangeCart;
+        }
+        #endregion
     }
 }
 
