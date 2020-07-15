@@ -11,9 +11,63 @@
 </style>
 <h1>ShoppingCart</h1>
 
+
+@*<MatTable Items="shoppingCarts" class="mat-elevation-z5" AllowSelection="true" SelectionChanged="SelectionChangedEvent">
+    <MatTableHeader>
+        <th>Produktname</th>
+        <th>Beschreibung</th>
+        <th>Preis</th>
+        <th>Anzahl</th>
+        
+    </MatTableHeader>
+    <MatTableRow>
+        <td>@context.Name</td>
+        <td>@context.Products.Name</td>
+        <td>@context.Description</td>
+    </MatTableRow>
+</MatTable>*@
+
+
 @code
 {
+    private string _currentSelectedTask;
 
+
+    Webshop.DTO.ShoppingCart[] shoppingCarts = new[]
+            {
+                new Webshop.DTO.ShoppingCart(){ShoppingCartName="W1",
+                    Products = new List<Webshop.DTO.Product>(){new DTO.Product { Amount = 1, Description = "Upstibu", ImagePath = "asdf", Name = "Real", Price = 1.12 } }
+
+            }
+    };
+    public void SelectionChangedEvent(object row)
+    {
+        if (row == null)
+        {
+            //_currentSelectedTask = "";
+        }
+        else
+        {
+            //_currentSelectedTask = string.Format("Task Nr. {0} has been selected", ((Task)row).Id);
+        }
+
+        this.StateHasChanged();
+    }
+    //private string _currentSelectedTask;
+
+    //public void SelectionChangedEvent(object row)
+    //{
+    //    if (row == null)
+    //    {
+    //        _currentSelectedTask = "";
+    //    }
+    //    else
+    //    {
+    //        _currentSelectedTask = string.Format("Task Nr. {0} has been selected", ((Task)row).Id);
+    //    }
+
+    //    this.StateHasChanged();
+    //}
 }
 
 

@@ -24,8 +24,12 @@
 
 <div class="center">
 
+    <MatSlideToggle @bind-Value="@Val1"></MatSlideToggle>
+    <span>Nur Lagerware</span>
     <MatTextField @bind-Value="@myStringValue" Label="Suche" Outlined="true"></MatTextField>
     <MatIconButton Icon="search"></MatIconButton>
+
+
 
 </div>
 
@@ -72,6 +76,10 @@
     </div>
 </div>
 
+<div>
+    <MatPaginator Length="100" PageSize="@pageSize" Page="@OnPage"></MatPaginator>
+</div>
+
 @code
 {
     private string myStringValue;
@@ -116,5 +124,20 @@
     {
 
     }
+
+    #region Paginator
+    int pageSize = 25;
+    int pageIndex = 0;
+
+    void OnPage(MatPaginatorPageEvent e)
+    {
+        pageSize = e.PageSize;
+        pageIndex = e.PageIndex;
+    }
+    #endregion
+
+    #region SideToggle
+    private bool Val1 = false;
+    #endregion
 }
 
