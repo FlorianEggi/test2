@@ -1,5 +1,8 @@
 
 @page "/Home"
+@inject Service service
+@using Webshop.Shared.Models.Requests.Search
+
 
 @using MatBlazor
 
@@ -22,66 +25,81 @@
     }
 </style>
 
-<div class="center">
+@*<EditForm Model="model">*@
+    <div class="center">
 
-    <MatSlideToggle @bind-Value="@Val1"></MatSlideToggle>
-    <span>Nur Lagerware</span>
-    <MatTextField @bind-Value="@myStringValue" Label="Suche" Outlined="true"></MatTextField>
-    <MatIconButton Icon="search"></MatIconButton>
-
-
-
-</div>
-
-
-
-<div class="mat-layout-grid">
-    <div class="mat-layout-grid-inner">
-        @foreach (var product in ListProducts)
-        {
-            <div class="mat-layout-grid-cell">
-                <MatCard class="demo-mat-card">
-                    <MatCardContent>
-                        <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
-                        <div class="demo-mat-card-content">
-                            <MatHeadline6 class="demo-mat-card-clean-margin">
-                                @product.Name
-                            </MatHeadline6>
-                            <MatSubtitle2 class="demo-mat-card-clean-margin">
-                                von Lukas Humer
-                            </MatSubtitle2>
-                        </div>
-
-                        <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
-                            @product.Description
-                        </MatBody2>
-                    </MatCardContent>
-                    <MatCardActions>
-                        <MatNumericUpDownField Label="Anzahl"
-                                               @bind-Value=@amount
-                                               Minimum=1></MatNumericUpDownField>
-                    </MatCardActions>
-
-                    <MatCardActions>
-                        <MatSelectItem Label="Warenkorb" Items="@warenkorbItems"></MatSelectItem>
-                        <MatIconButton Icon="description" OnClick="@OnClickDescription"></MatIconButton>
-                        <MatButton>In den Warenkorb</MatButton>
-                    </MatCardActions>
-                </MatCard>
-            </div>
-        }
-
-
+        <MatTextField @bind-Value="@myStringValue" Label="Suche" Outlined="true"></MatTextField>
+        <MatIconButton 
+                       Icon="search"></MatIconButton>
 
     </div>
-</div>
 
-<div>
-    <MatPaginator Length="100" PageSize="@pageSize" Page="@OnPage"></MatPaginator>
-</div>
+
+
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            @foreach (var product in ListProducts)
+            {
+                <div class="mat-layout-grid-cell">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
+                            <div class="demo-mat-card-content">
+                                <MatHeadline6 class="demo-mat-card-clean-margin">
+                                    @product.Name
+                                </MatHeadline6>
+                                <MatSubtitle2 class="demo-mat-card-clean-margin">
+                                    von Lukas Humer
+                                </MatSubtitle2>
+                            </div>
+
+                            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                                @product.Description
+                            </MatBody2>
+                        </MatCardContent>
+                        <MatCardActions>
+                            <MatNumericUpDownField Label="Anzahl"
+                                                   @bind-Value=@amount
+                                                   Minimum=1></MatNumericUpDownField>
+                        </MatCardActions>
+
+                        <MatCardActions>
+                            <MatSelectItem Label="Warenkorb" Items="@warenkorbItems"></MatSelectItem>
+                            <MatIconButton Icon="description" OnClick="@OnClickDescription"></MatIconButton>
+                            <MatButton>In den Warenkorb</MatButton>
+                        </MatCardActions>
+                    </MatCard>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+@*</EditForm>*@
 
 @code
 {
+
+    SearchRequest model = new SearchRequest();
+    string baseUrl = "https://www.online.holter.at/PGM4";
+
+    //bind-Values mit model. ersetzen
+    //in editform model definieren
+
+    public async Task<bool> Search()
+    {
+        //wenn man auf search drückt soll diese Methode aufgerufen werden
+
+        var searchUrl = $"{baseUrl}/OD300R.PGM";
+
+        var searched = service.SearchResponseAsync(searchUrl, model);
+        //für Luki
+        return await Task.FromResult(true);
+
+    }
+
+
     private string myStringValue;
 
     public string MyStringValue
@@ -124,20 +142,5 @@
     {
 
     }
-
-    #region Paginator
-    int pageSize = 25;
-    int pageIndex = 0;
-
-    void OnPage(MatPaginatorPageEvent e)
-    {
-        pageSize = e.PageSize;
-        pageIndex = e.PageIndex;
-    }
-    #endregion
-
-    #region SideToggle
-    private bool Val1 = false;
-    #endregion
 }
 

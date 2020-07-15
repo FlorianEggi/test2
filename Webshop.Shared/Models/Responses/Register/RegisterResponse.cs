@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Webshop.Shared.Models.Responses
+namespace Webshop.Shared.Models.Responses.Register
 {
    public class RegisterResponse
     {
@@ -12,7 +12,7 @@ namespace Webshop.Shared.Models.Responses
         public string Status { get; set; }
 
         [JsonProperty(PropertyName="data")]
-        public Data Data { get; set; }
+        public RegisterData Data { get; set; }
        // public string[] Error { get; set; }
 
     }

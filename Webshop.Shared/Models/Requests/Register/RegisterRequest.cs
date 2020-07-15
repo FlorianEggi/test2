@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Webshop.Shared.Models.Requests
+namespace Webshop.Shared.Models.Requests.Register
 {
     public class RegisterRequest
     {

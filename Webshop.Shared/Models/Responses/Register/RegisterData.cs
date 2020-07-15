@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Webshop.Shared.Models.Responses
+namespace Webshop.Shared.Models.Responses.Register
 {
-    public class Data
+    public class RegisterData
 
     {
         [JsonProperty("sessionid")]
