@@ -18,12 +18,15 @@ namespace Webshop
                 return new Service(url);
             });
 
-            var corsAttr = new Microsoft.AspNetCore.Cors.EnableCorsAttribute();
 
+          //  builder.Services.AddOptions();
+            var corsAttr = new Microsoft.AspNetCore.Cors.EnableCorsAttribute();
+            builder.Services.AddAuthorizationCore();
             
             //WebAssemblyHttpMessageHandlerOptions.DefaultCredentials = FetchCredentialsOption.Include;
 
             builder.RootComponents.Add<App>("app");
+            
             // CreateHostBuilder(args).Build().Run();
             await builder.Build().RunAsync();
             
