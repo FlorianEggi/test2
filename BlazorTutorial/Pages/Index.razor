@@ -25,20 +25,27 @@
 </style>
 
 <div class="center">
+    <span>Nur Lagerware </span>
+    <MatSlideToggle @bind-Value="@Lagerware"></MatSlideToggle>
     <MatTextField @bind-Value="@searchTerm" Label="Suche" Outlined="true"></MatTextField>
     <MatIconButton @onclick="@SearchClicked" Icon="search"></MatIconButton>
 </div>
 
-<div>
-        <MatTable Items="@ListProducts" class="mat-elevation-z5">
+@if (ListProducts.Count > 0)
+{
+    <div>
+        <MatTable OnRowDbClick="OnPersonDbClicked"
+                  AllowSelection="true"
+                  Items="@ListProducts" class="mat-elevation-z5">
             <MatTableHeader>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Horsepower</th>
             </MatTableHeader>
             <MatTableRow>
-                <td>@context.Datanormname1 <br />
-                @context.Datanormname2
+                <td>
+                    @context.Datanormname1 <br />
+                    @context.Datanormname2
                 </td>
                 <td>@context.Unit</td>
                 <td>@context.Grossprice</td>
@@ -46,102 +53,15 @@
         </MatTable>
     </div>
 
-
-
-@code
-{
-    //bind-Values mit model. ersetzen
-    //in editform model definieren
-
-    private string searchTerm;
-
-    public string SearchTerm
-    {
-        get { return searchTerm; }
-        set { searchTerm = value; }
-    }
-
-    string[] warenkorbItems = new[]
-           {
-                "w1",
-                "w2",
-                "w3",
-            };
-
-    public IList<Webshop.DTO.Product> ListProducts = new List<DTO.Product>
-            ()
-{
-        new DTO.Product { itemid = "HAG1234",
-        Datanormname1 = "Rohr",
-    Datanormname2 = "",
-    Codestockitem = "L",
-    Unit = "PCE",
-    Grossprice= "123",
-    Discountgroup= "A2B1"}
-           };
-
-
-
-    //private Webshop.Shared.Models.Responses.Search.SearchResponse searchResponseModel;
-
-
-    //public Webshop.Shared.Models.Responses.Search.SearchResponse SearchResponseModel
-    //{
-    //    get { return searchResponseModel; }
-    //    set
-    //    {
-
-    //        searchResponseModel = value;
-
-    //    }
-    //}
-
-    //public async void InitCard()
-    //{
-    //    model.searchterms = "AT9";
-    //    model.displaycount = "5";   //paginator
-    //    var searchUrl = $"{baseUrl}/OD300R.PGM";
-    //    var searched = await service.SearchResponseAsync(searchUrl, model);
-    //    Console.WriteLine("SearchResults: " + searched.Data.Searchresults);
-    //    searchResponseModel = searched;
-
-
-    //}
-
-
-
-
-    //SearchedItems
-
-    SearchRequest model = new SearchRequest();
-    string baseUrl = "https://www.online.holter.at/PGM4";
-
-    public async void SearchClicked(MouseEventArgs e)
-    {
-        Console.WriteLine("---------------------------");
-        Console.WriteLine("SearchTerm: " + searchTerm);
-
-        var searchUrl = $"{baseUrl}/OD300R.PGM";
-        model.searchterms = searchTerm;
-        model.displaycount = "5";   //paginator
-        var searched = await service.SearchResponseAsync(searchUrl, model);
-        //Console.WriteLine("SearchResults: " + searched.Data.Searchresults);
-        searched.Data.Searchresults.ForEach(x => ListProducts.Add(new DTO.Product
-        {
-            itemid = x.Itemid,
-            Datanormname1 = x.Datanormname1,
-            Datanormname2 = x.Datanormname2,
-            Codestockitem = x.Codestockitem,
-            Unit = x.Unit,
-            Grossprice = x.Grossprice,
-            Discountgroup = x.Discountgroup
-        }));
-
-        Console.WriteLine("SearchResults: " + ListProducts[3].Datanormname1);
-    }
-
-    public void OnClickDescription(MouseEventArgs e)
-    {
-
-    }
+    <MatDialog @bind-IsOpen="@dialogIsOpen">
+        <MatDialogTitle>Hi Luke</MatDialogTitle>
+        <MatDialogContent>
+            <p>What's your favorite animal?</p>
+            <MatTextField @bind-Value="@dialogAnimal"></MatTextField>
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@(e => { dialogIsOpen = false; })">Abbrechen</MatButton>
+            <MatButton OnClick="@OkClick">In den Warenkorb</MatButton>
+        </MatDialogActions>
+    </MatDialog>
 }
