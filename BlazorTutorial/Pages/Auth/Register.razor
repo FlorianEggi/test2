@@ -10,10 +10,10 @@
 
 
 <MatCard>
-    <div class="hidden-mdc-down">
+    @*<div class="hidden-mdc-down">
         <MatIconButton Icon="exit_to_app" Class="float-left" />
         <MatIconButton Icon="home" Class="float-left" Link="/" />
-    </div>
+    </div>*@
 
     <div class="logo">
         <a href="/" title="Holter Online"><img src="/images/logo.png" asp-append-version="true" style="width:250px;" /><br /></a>
@@ -101,20 +101,6 @@
 
         var loginUrl = $"{baseUrl}/OD000R.PGM";
 
-        // var response = await Http.SendAsync(httpRequestMessage);
-        //   var response2 = await Http.PostAsync(url, formContent);
-
-        // var response2 = await authService.RegisterUserAsync(url, formContent);
-
-        // Console.WriteLine(response2.StatusCode);
-
-        //Console.WriteLine(response.Headers);
-
-        //Console.WriteLine(response.Content);
-
-        //var responseStatus = response.StatusCode;
-        //var responseBody = await response2.Content.ReadAsStringAsync();
-        // Console.WriteLine(responseBody);
 
         var loginRequest = await authService.RegisterUserAsync(loginUrl, model);
 
@@ -140,13 +126,42 @@
             isBusy = false;
         }
 
-        //var searchUrl = $"{baseUrl}/OD300R.PGM";
-        //var req = await authService.SearchResponseAsync(searchUrl,null);
 
+        #region DemoServiceRequests
+        //var searchUrl = $"{baseUrl}/OD300R.PGM";
+        //var req = await authService.SearchResponseAsync(searchUrl,model);
         //foreach (var item in req.Data.Searchresults)
         //{
         //    Console.WriteLine(item.Itemid + " " + item.Datanormname1);
         //}
+
+
+        //var articleDetailUrl = $"{baseUrl}/OD310R.PGM";
+        //var articleDetail = await authService.ArticleDetailResponseAsync(articleDetailUrl, model);
+        //Console.WriteLine(articleDetail.Data.Datanormname1);
+
+
+
+
+        //var shoppingCartListUrl = $"{baseUrl}/OD201R.PGM";
+        //var shoppingCarts = await authService.ShoppingCartResponseAsync(shoppingCartListUrl);
+
+
+
+        //var newShoppingCart = $"{baseUrl}/OD200R.PGM";
+        //var shoppingCarts = await authService.NewShoppingCartResponseAsync(newShoppingCart, model);
+
+        //var changeShoppingCart = $"{baseUrl}/OD210R.PGM";
+        //var shoppingCartChange = await authService.ChangeCurrentCartResponseAsync(newShoppingCart, model);
+
+
+        //var showShoppingCar = $"{baseUrl}/OD202R.PGM";
+        //var shoppingCartShow = await authService.ChangeCurrentCartResponseAsync(showShoppingCar, model);
+
+        //var addToItemCart = $"{baseUrl}/OD220R.PGM";
+        //var addToCart = await authService.AddShoppingCartResponseAsync(addToItemCart, model);
+
+        #endregion
 
         return await Task.FromResult(true);
 
