@@ -28,8 +28,9 @@
     <span>Nur Lagerware </span>
     <MatSlideToggle @bind-Value="@Lagerware"></MatSlideToggle>
     <MatTextField @bind-Value="@searchTerm" Label="Suche" Outlined="true"></MatTextField>
-    <MatIconButton @onclick="@SearchClicked" Icon="search"></MatIconButton>
+    <MatButton TrailingIcon="search" @onclick="@SearchClicked"></MatButton>
 </div>
+
 
 @if (ListProducts.Count > 0)
 {
@@ -54,10 +55,26 @@
     </div>
 
     <MatDialog @bind-IsOpen="@dialogIsOpen">
-        <MatDialogTitle>Hi Luke</MatDialogTitle>
+        <MatDialogTitle>@DetailName</MatDialogTitle>
         <MatDialogContent>
-            <p>What's your favorite animal?</p>
-            <MatTextField @bind-Value="@dialogAnimal"></MatTextField>
+            <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
+            <div class="demo-mat-card-content">
+                <MatSubtitle2 class="demo-mat-card-clean-margin">
+                    <MatNumericUpDownField Label="Bestellmenge"
+                                           @bind-Value=@OrderQuantity
+                                           DecimalPlaces=0
+                                           Minimum=1>
+                    </MatNumericUpDownField>
+                    <br />
+                    @ProductPrice
+                    <br />
+                    Ges: @TotalPrice
+
+                </MatSubtitle2>
+                <MatSubtitle2 class="demo-mat-card-clean-margin">
+                    by Kurt Wagner
+                </MatSubtitle2>
+            </div>
         </MatDialogContent>
         <MatDialogActions>
             <MatButton OnClick="@(e => { dialogIsOpen = false; })">Abbrechen</MatButton>
@@ -65,3 +82,35 @@
         </MatDialogActions>
     </MatDialog>
 }
+
+
+@*<style>
+    </style>
+    <MatCard class="demo-mat-card">
+        <MatCardContent>
+            <MatCardMedia Wide="true" ImageUrl="https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg"></MatCardMedia>
+            <div class="demo-mat-card-content">
+                <MatHeadline6 class="demo-mat-card-clean-margin">
+                    Our Changing Planet
+                </MatHeadline6>
+                <MatSubtitle2 class="demo-mat-card-clean-margin">
+                    by Kurt Wagner
+                </MatSubtitle2>
+            </div>
+
+            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                Visit ten places on our planet that are undergoing the biggest changes today.
+            </MatBody2>
+        </MatCardContent>
+        <MatCardActions>
+            <MatCardActionButtons>
+                <MatButton>Read</MatButton>
+                <MatButton>Bookmark</MatButton>
+            </MatCardActionButtons>
+
+            <MatCardActionIcons>
+                <MatIconButton Icon="@MatIconNames.Favorite"></MatIconButton>
+                <MatIconButton Icon="@MatIconNames.Dashboard"></MatIconButton>
+            </MatCardActionIcons>
+        </MatCardActions>
+    </MatCard>*@

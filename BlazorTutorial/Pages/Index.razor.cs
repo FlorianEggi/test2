@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Webshop.DTO;
+using Webshop.Shared.Models.Requests.ArticleDetails;
 using Webshop.Shared.Models.Requests.Search;
 using static Webshop.Shared.Services.Service;
 
@@ -10,14 +12,10 @@ namespace Webshop.Pages
 {
     public partial class Index
     {
-        
-
-        private string searchTerm;
-
-       
+        string baseUrl = "https://www.online.holter.at/PGM4";
 
         string[] warenkorbItems = new[]
-               {
+                      {
                 "w1",
                 "w2",
                 "w3",
@@ -29,6 +27,7 @@ namespace Webshop.Pages
 
         public List<Webshop.DTO.Product> ListProducts = new List<DTO.Product>();
 
+        private string searchTerm;
         public string SearchTerm
         {
             get { return searchTerm; }
@@ -37,11 +36,11 @@ namespace Webshop.Pages
 
         public bool Lagerware { get; set; } = false;
 
-        SearchRequest model = new SearchRequest();
-        string baseUrl = "https://www.online.holter.at/PGM4";
+
 
         public async void SearchClicked()
         {
+            SearchRequest model = new SearchRequest();
             Console.WriteLine("---------------------------");
             Console.WriteLine("Lagerware: " + Lagerware);
             if (!String.IsNullOrEmpty(searchTerm))
@@ -71,10 +70,12 @@ namespace Webshop.Pages
                         .Where(x => x.Codestockitem.Equals('L'))
                         .ToList();
                 }
+                StateHasChanged();
                 Console.WriteLine("SearchResults: " + ListProducts[3].Datanormname1);
             }
             else
             {
+                StateHasChanged();
                 Console.WriteLine("Searchterm is null or empty");
             }
 
@@ -84,24 +85,39 @@ namespace Webshop.Pages
         #region DoubleClickOnItem / Dialog
         public void OnPersonDbClicked(object item)
         {
-            Console.WriteLine("SelectedItem: " + item.ToString());
-            OpenDialog();
+            Console.WriteLine("SelectedItem: " + item);
+            var currentProduct = (Product) item;
+            OpenDialog(currentProduct.itemid);
         }
 
-        bool dialogIsOpen = false;
-        string name = null;
-        string animal = null;
-        string dialogAnimal = null;
+        public bool dialogIsOpen = false;
+        public string DetailName = null;
+        public double ProductPrice = -1;
+        public int OrderQuantity = -1;
+        
+        public double TotalPrice;
 
-        public void OpenDialog()
+
+
+
+        public async void OpenDialog(string itemid)
         {
-            dialogAnimal = null;
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("ItemID of CurrentProduct: "+ itemid);
             dialogIsOpen = true;
+
+            ArticleDetailRequest model = new ArticleDetailRequest();
+            var articleDetailUrl = $"{baseUrl}/OD310R.PGM";
+            var articleDetail = await service.ArticleDetailResponseAsync(articleDetailUrl, model);
+            DetailName = articleDetail.Data.Datanormname1;
+            ProductPrice = double.Parse(articleDetail.Data.Grossprice);
+            TotalPrice = OrderQuantity * ProductPrice;
+
+            StateHasChanged();
         }
 
         public void OkClick()
         {
-            animal = dialogAnimal;
             dialogIsOpen = false;
         }
         #endregion
