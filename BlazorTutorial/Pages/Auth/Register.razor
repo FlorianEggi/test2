@@ -9,20 +9,23 @@
 @inject HttpClient Http
 
 
-<MatCard>
+<MatCard Style="margin:350px;width:700px;height:500px;background-color:lightsteelblue;opacity:0.9;border-radius:5px">
     @*<div class="hidden-mdc-down">
         <MatIconButton Icon="exit_to_app" Class="float-left" />
         <MatIconButton Icon="home" Class="float-left" Link="/" />
     </div>*@
 
+    <div>
+        <br />
+    </div>
     <div class="logo">
-        <a href="/" title="Holter Online"><img src="/images/logo.png" asp-append-version="true" style="width:250px;" /><br /></a>
+        <a href="/" title="Holter Online"><img src="/images/logo.png" asp-append-version="true" style="width:250px;height:50px;" /><br /></a>
 
         <br />
 
     </div>
 
-    <EditForm Model="model" OnValidSubmit="RegisterUser">
+    <EditForm Model="model" OnValidSubmit="RegisterUser" style="height: 400px;">
         @*<RadzenCard>*@
         <DataAnnotationsValidator>
 
@@ -32,15 +35,16 @@
 
         <fieldset>
             <div class="form-group">
-                <MatTextField @bind-Value="model.mail" id="mail" Label="Email" Icon="person" IconTrailing="true" FullWidth="true" Required="true" tabindex="1"></MatTextField>
+                <MatTextField Style="height:100px" @bind-Value="model.mail" id="mail" Label="Email" Icon="person" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
             </div>
 
             <div class="form-group">
-                <MatTextField @bind-Value="model.password" Type="password" id="password" Label="Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" tabindex="1"></MatTextField>
+                <MatTextField Style="height:100px" @bind-Value="model.password" Type="password" id="password" Label="Passwort" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
             </div>
+            <hr />
 
-            <div class="form-group">
-                <MatButton class="float-right" Disabled="isBusy" Type="submit" Raised="true" tabindex="3">Login</MatButton>
+            <div class="form-group" style="text-align:center">
+                <MatButton Style="height:60px;width:200px;font-size:15px" class="" Disabled="isBusy" Type="submit" Raised="true">Login</MatButton>
                 @*<MatCheckbox @bind-Value="model.RememberMe" class="filled-in chk-col-blue">Remember Me</MatCheckbox>*@
             </div>
             <hr />
