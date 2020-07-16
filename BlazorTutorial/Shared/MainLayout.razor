@@ -7,11 +7,18 @@
 <div class="main">
     <div class="top-row">
 
-            <RadzenMenu>
-                <RadzenMenuItem Text="Mein Profil" Icon="account_box">
-                    <RadzenMenuItem Text="Logout" Path="/"  Icon="account_circle"></RadzenMenuItem>
-                 
-                </RadzenMenuItem>
+        <RadzenMenu>
+            @*<MatTooltip Tooltip="Toggle Navigation">
+                <MatIconButton Class="navToggle" Icon="menu" ToggleIcon="menu" OnClick="@((e) => NavToggle())" RefBack="@context"></MatIconButton>
+            </MatTooltip>
+        
+            <MatTooltip Tooltip="Minify Navigation">
+                <MatIconButton Class="navToggle" Icon="format_indent_decrease" ToggleIcon="format_indent_increase" OnClick="@((e) => NavMinify())" RefBack="@context"></MatIconButton>
+            </MatTooltip>*@
+            <RadzenMenuItem Text="Mein Profil" Icon="account_box">
+                <RadzenMenuItem Text="Logout" Path="/" Icon="account_circle"></RadzenMenuItem>
+
+            </RadzenMenuItem>
         </RadzenMenu>
 
         <MatH4 class="center">
@@ -24,3 +31,19 @@
         @Body
     </div>
 </div>
+
+@code
+{
+    bool _navMenuOpened = true;
+    bool _navMinified = false;
+    public string bbDrawerClass = "";
+    void NavToggle()
+    {
+
+    }
+
+    void NavMinify()
+    {
+
+    }
+}
